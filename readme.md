@@ -27,16 +27,50 @@ Welcome to **shadow-form-handler**, the ultimate toolkit for effortless form han
 6. **Event-Driven Architecture:** Extend functionality with hooks and custom event listeners.
 7. **Customizable UI:** Tailor error messages and styles to match your design.
 
+## 📦 Installation
 
-### 📦 Installation
+### Using npm
+
+Install the package via npm:
 
 ```bash
 npm install shadow-form-handler
 ```
 
-Got it! Here's how you can instruct users to add the script tag for both local and CDN usage in your README:
+### Using HTML Script Tag
 
----
+To use **ShadowFormHandler** directly in your HTML file, add the following script tag:
+
+```html
+<script src="./node_modules/shadow-form-handler/dist/shadow-form-handler.js"></script>
+```
+
+### Using CDN
+
+Alternatively, you can use **ShadowFormHandler** via a CDN by adding this script tag:
+
+```html
+<script src="https://cdn.jsdelivr.net/gh/Mostafashadow1/shadow-form-handler/dist/shadow-form-handler.js"></script>
+```
+
+### Using GitHub Releases
+
+You can also download the latest release directly from GitHub. Follow these steps:
+
+1. **Navigate to the Releases Page**:
+   Go to the [Releases](https://github.com/Mostafashadow1/shadow-form-handler/releases) section of your GitHub repository.
+
+2. **Download the Latest Release**:
+   Find the latest release and download the `shadow-form-handler.js` file from the assets section.
+
+3. **Include the Script in Your HTML**:
+   Add the downloaded file to your project and include it in your HTML file like this:
+
+```html
+<script src="path/to/shadow-form-handler.js"></script>
+```
+
+
 
 ## 🛠️ Usage
 
