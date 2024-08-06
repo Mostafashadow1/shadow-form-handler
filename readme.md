@@ -87,7 +87,7 @@ To use **shadow-form-handler** directly in your HTML file, add the following scr
 Alternatively, you can use **shadow-form-handler** via a CDN by adding this script tag:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/shadow-form-handler/dist/shadow-form-handler.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/Mostafashadow1/shadow-form-handler/dist/shadow-form-handler.js"></script>
 ```
 
 ## Simple Example 
@@ -470,7 +470,7 @@ Here's a comprehensive example demonstrating the power of shadow-form-handler:
         <button type="button" id="addDescription">Add Description Field</button>
       </form>
     
-       <script  src="./node_modules/shadow-form-handler/dist/shadow-form-handler.js"></script>
+       <script  src=https://cdn.jsdelivr.net/gh/Mostafashadow1/shadow-form-handler/dist/shadow-form-handler.js></script>
       <script src="./index.js">
       </script>
 </body>
