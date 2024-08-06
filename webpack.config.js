@@ -6,7 +6,6 @@ module.exports = {
   output: {
     filename: 'shadow-form-handler.js',
     path: path.resolve(__dirname, 'dist'),
-    libraryTarget: 'commonjs2', // This is important for publishing packages
   },
   resolve: {
     extensions: ['.ts', '.js'],

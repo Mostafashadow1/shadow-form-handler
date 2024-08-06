@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id="myForm">
+        <div>
+          <label for="firstname">Firstname:</label>
+          <input type="text" id="firstname" >
+          <span id="firstname-error" class="error-message"></span>
+        </div>
+        <div>
+          <label for="lastname">Lastname:</label>
+          <input type="text" id="lastname" >
+          <span id="lastname-error" class="error-message"></span>
+        </div>
+        <div>
+          <label for="username">Username:</label>
+          <input type="text" id="username" >
+          <span id="username-error" class="error-message"></span>
+        
+        </div>
+        <div>
+          <label for="email">Email:</label>
+          <input type="text" id="email" >
+          <span id="email-error" class="error-message"></span>
+        </div>
+        <div>
+          <label for="password">Password:</label>
+          <input type="password" id="password" >
+          <span id="password-error" class="error-message"></span>
+        </div>
+        <div>
+          <label for="confirm-password">Confirm Password:</label>
+          <input type="password" id="confirm-password" >
+          <span id="confirm-password-error" class="error-message"></span>
+        </div>
+        <button type="submit">Submit</button>
+        <button type="button" id="removeUsername">Remove Username Field</button>
+        <button type="button" id="addDescription">Add Description Field</button>
+      </form>
+    
+       <script  src="./node_modules/shadow-form-handler/dist/shadow-form-handler.js"></script>
+      <script src="./index.js">
+      </script>
+</body>
+</html>

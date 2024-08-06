@@ -1,13 +1,15 @@
 {
   "compilerOptions": {
     "outDir": "./dist",
-    "module": "commonjs",
-    "target": "es5",
-    "lib": ["es6", "dom"],
+    "module": "es2020",
+    "target": "es2020",
+    "lib": ["es2020", "dom"],
     "sourceMap": true,
     "strict": true,
     "esModuleInterop": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "declaration": true,
+    "moduleResolution": "node"
   },
   "include": ["src"],
   "exclude": ["node_modules"]

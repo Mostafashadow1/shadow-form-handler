@@ -34,17 +34,38 @@ Welcome to **shadow-form-handler**, the ultimate toolkit for effortless form han
 npm install shadow-form-handler
 ```
 
+Got it! Here's how you can instruct users to add the script tag for both local and CDN usage in your README:
+
+---
+
+## 🛠️ Usage
+
+### Using with HTML Script Tag
+
+To use **shadow-form-handler** directly in your HTML file, add the following script tag:
+
+```html
+<script src="./node_modules/shadow-form-handler/dist/shadow-form-handler.js"></script>
+```
+
+### Using with CDN
+
+Alternatively, you can use **shadow-form-handler** via a CDN by adding this script tag:
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/shadow-form-handler/dist/shadow-form-handler.js"></script>
+```
 
 ## Simple Example 
 ```html
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Simple Example with shadow-form-handler</title>
-  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./styles.css"
+ 
 </head>
 <body>
   <form id="myForm">
@@ -55,14 +76,17 @@ npm install shadow-form-handler
     </div>
     <button type="submit">Submit</button>
   </form>
+  <script src="./node_modules/shadow-form-handler/dist/shadow-form-handlerjs"></script>
+  <script src="./index.js"></script>
+
 </body>
 </html>
 
 ```
 ```javascript
-import { FormHandler } from 'form-handler-package';
+const { FormHandler , required , minLength , maxLength } = shadowFormHandler;
 const formHandler = new FormHandler();
-
+ 
 // Register a field
 formHandler.register({
   id: 'username',
@@ -202,9 +226,16 @@ The package comes with several pre-defined validation rules:
 Create complex validation rules with ease:
 
 ```javascript
+
+ // Set validation mode
+formHandler.setMode('runtime'); // runtime or default 
+
+// Register a field
 formHandler.register({
   id: "password",
-  
+  schemaValidation: [
+    required() // add mesage optional
+  ],
   customValidation: [
     {
       validate: value => /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(value),
@@ -217,10 +248,14 @@ formHandler.register({
 ### Or use built in Validator like Pattern
 
 ```javascript
-// Or use Pattern
+
+ // Set validation mode
+ formHandler.setMode('runtime'); // runtime or default 
+ 
 formHandler.register({
   id: "password",
   schemaValidation: [
+    required('password filed is required'),
     pattern( /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/ , "Password must be at least 8 characters long and include both letters and numbers"),
   ]
 });
@@ -232,12 +267,18 @@ formHandler.register({
 Perform server-side checks without blocking the UI:
 
 ```javascript
+
+
 formHandler.register({
   id: "username",
-  customValidation: [
+  schemaValidation: [
+    required('password filed is required'),
+  ],
+   customValidation: [
     {
       validate: async (value) => {
-        const response = await fetch(`/check-username?username=${value}`);
+        // Simulating an API call to check username uniqueness
+        const response = await fetch(`/check-username?username=${value}`);  
         return response.ok;
       },
       message: "Username is already taken"
@@ -251,7 +292,18 @@ formHandler.register({
 Validate fields based on the values of other fields:
 
 ```javascript
+
+// register password field
 formHandler.register({
+  id: "password",
+  schemaValidation: [
+    required('password filed is required'),
+    pattern( /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/ , "Password must be at least 8 characters long and include both letters and numbers"),
+  ]
+});
+
+// register confirm-password field
+ formHandler.register({
   id: "confirm-password",
   customValidation: [
     {
@@ -283,6 +335,7 @@ formHandler.register({
 ### Dynamic Field Management
 
 ```javascript
+
 // Add a new field
 formHandler.addField({
   containerId: 'formContainer',
@@ -327,6 +380,7 @@ Customize the appearance of error messages:
 formHandler.setErrorStyles({
   color: 'red',
   fontStyle: 'italic',
+  fontWeight:"bold",
   marginTop: '5px'
 });
 ```
@@ -340,62 +394,68 @@ Here's a comprehensive example demonstrating the power of shadow-form-handler:
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Enhanced Form Validation Example</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 </head>
 <body>
-  <form id="myForm">
-    <div>
-      <label for="firstname">Firstname:</label>
-      <input type="text" id="firstname" >
-      <span id="firstname-error" class="error-message"></span>
-    </div>
-    <div>
-      <label for="lastname">Lastname:</label>
-      <input type="text" id="lastname" >
-      <span id="lastname-error" class="error-message"></span>
-    </div>
-    <div>
-      <label for="username">Username:</label>
-      <input type="text" id="username" >
-      <span id="username-error" class="error-message"></span>
+    <form id="myForm">
+        <div>
+          <label for="firstname">Firstname:</label>
+          <input type="text" id="firstname" >
+          <span id="firstname-error" class="error-message"></span>
+        </div>
+        <div>
+          <label for="lastname">Lastname:</label>
+          <input type="text" id="lastname" >
+          <span id="lastname-error" class="error-message"></span>
+        </div>
+        <div>
+          <label for="username">Username:</label>
+          <input type="text" id="username" >
+          <span id="username-error" class="error-message"></span>
+        
+        </div>
+        <div>
+          <label for="email">Email:</label>
+          <input type="text" id="email" >
+          <span id="email-error" class="error-message"></span>
+        </div>
+        <div>
+          <label for="password">Password:</label>
+          <input type="password" id="password" >
+          <span id="password-error" class="error-message"></span>
+        </div>
+        <div>
+          <label for="confirm-password">Confirm Password:</label>
+          <input type="password" id="confirm-password" >
+          <span id="confirm-password-error" class="error-message"></span>
+        </div>
+        <button type="submit">Submit</button>
+        <button type="button" id="removeUsername">Remove Username Field</button>
+        <button type="button" id="addDescription">Add Description Field</button>
+      </form>
     
-    </div>
-    <div>
-      <label for="email">Email:</label>
-      <input type="text" id="email" >
-      <span id="email-error" class="error-message"></span>
-    </div>
-    <div>
-      <label for="password">Password:</label>
-      <input type="password" id="password" >
-      <span id="password-error" class="error-message"></span>
-    </div>
-    <div>
-      <label for="confirm-password">Confirm Password:</label>
-      <input type="password" id="confirm-password" >
-      <span id="confirm-password-error" class="error-message"></span>
-    </div>
-    <button type="submit">Submit</button>
-    <button type="button" id="removeUsername">Remove Username Field</button>
-    <button type="button" id="addDescription">Add Description Field</button>
-  </form>
+       <script  src="./node_modules/shadow-form-handler/dist/shadow-form-handler.js"></script>
+      <script src="./index.js">
+      </script>
+</body>
+</html>
 
   ```
 
   ```javascript
- const { FormHandler, required, minLength, maxLength, pattern, email } = "shadow-form-handler";
+ const { FormHandler, required, minLength, maxLength, pattern, email } = shadowFormHandler;
     const formHandler = new FormHandler();
     
-    // Set validation mode
+    // Set validation mode 
     formHandler.setMode('runtime');
 
     // Add hooks for validation events
     formHandler.addHooks({
       beforeValidate: (fields) => console.log("beforeValidate", fields),
       afterValidate: (fields) => console.log("after validated", fields),
-      onValueChange: (field, fields) => console.log(fields),
+      onValueChange: (field, fields) => console.log( field, fields),
     });
 
     // Set custom error styles
@@ -404,23 +464,7 @@ Here's a comprehensive example demonstrating the power of shadow-form-handler:
       fontWeight: 'bold',
     });
 
-     const { FormHandler, required, minLength, maxLength, pattern, email } = window.shadowFormHandler;
-    const formHandler = new FormHandler();
-    formHandler.setMode('runtime');
-
-    // Adding hooks for validation events
-    formHandler.addHooks({
-      beforeValidate:  (fields) => console.log( "beforeValidate", fields),
-      afterValidate:(fields) => console.log("after validated" , fields),
-      onValueChange: (field, fields) =>(fields) => console.log(fields),
-    })
-    // Setting error styles
-    formHandler.setErrorStyles({
-      color: 'red',
-      fontWeight: 'bold',
-    });
-
-
+    
     // Registering form fields
     formHandler.register({
       id: "firstname",
@@ -462,19 +506,20 @@ Here's a comprehensive example demonstrating the power of shadow-form-handler:
 
     formHandler.register({
       id: "password",
-      schemaValidation: [required("This input is required")]
-    });
-
-    formHandler.register({
-      id: "confirm-password",
       schemaValidation: [
-        required("This input is required")
-      ],
+        required('password filed is required'),
+        pattern( /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/ , "Password must be at least 8 characters long and include both letters and numbers"),
+      ]
+    });
+    
+    // register confirm-password field
+     formHandler.register({
+      id: "confirm-password",
       customValidation: [
         {
           validate: value => value === formHandler.getValue('password'),
           message: "Passwords do not match",
-          depends:'password',
+          depends: 'password',
         }
       ],
     });

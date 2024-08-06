@@ -131,7 +131,6 @@ export class FormHandler {
    * @param {Hooks} hooks - Hooks to be set.
    */
   public addHooks(hooks: Hooks) {
-    console.log('hooks')
     this.hooksHandler.addHooks(hooks);
   }
 
