@@ -2,6 +2,7 @@
   "name": "shadow-form-handler",
   "version": "1.0.2",
   "main": "dist/shadow-form-handler.js",
+  "types": "dist/index.d.ts",
   "description": "shadow-form-handler, the ultimate toolkit for effortless form handling and validation in JavaScript and TypeScript! Whether you're building simple forms or complex multi-step processes, our lightweight library empowers you to create seamless user experiences with minimal code.",
   "scripts": {
     "build:dev": "webpack  --mode development --config webpack.config.js",
@@ -9,6 +10,7 @@
     "watch": "webpack --watch --mode development --config webpack.config.js",
     "start": "lite-server public/index.html"
   },
+  
   "files": [
     "dist",
     "README.md"
