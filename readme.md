@@ -70,26 +70,6 @@ You can also download the latest release directly from GitHub. Follow these step
 <script src="path/to/shadow-form-handler.js"></script>
 ```
 
-
-
-## 🛠️ Usage
-
-### Using with HTML Script Tag
-
-To use **shadow-form-handler** directly in your HTML file, add the following script tag:
-
-```html
-<script src="./node_modules/shadow-form-handler/dist/shadow-form-handler.js"></script>
-```
-
-### Using with CDN
-
-Alternatively, you can use **shadow-form-handler** via a CDN by adding this script tag:
-
-```html
-<script src="https://cdn.jsdelivr.net/gh/Mostafashadow1/shadow-form-handler/dist/shadow-form-handler.js"></script>
-```
-
 ## Simple Example 
 ```html
 <!DOCTYPE html>
