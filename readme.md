@@ -50,7 +50,7 @@ To use **ShadowFormHandler** directly in your HTML file, add the following scrip
 Alternatively, you can use **ShadowFormHandler** via a CDN by adding this script tag:
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/Mostafashadow1/shadow-form-handler/dist/shadow-form-handler.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/Mostafashadow1/shadow-form-handler@v1.0.3/dist/shadow-form-handler.js"></script>
 ```
 
 ### Using GitHub Releases
@@ -90,7 +90,7 @@ You can also download the latest release directly from GitHub. Follow these step
     <button type="submit">Submit</button>
   </form>
 
-   <script src="https://cdn.jsdelivr.net/gh/Mostafashadow1/shadow-form-handler/dist/shadow-form-handler.js"></script>
+   <script src="https://cdn.jsdelivr.net/gh/Mostafashadow1/shadow-form-handler@v1.0.3/dist/shadow-form-handler.js"></script>
   <script src="./index.js"></script>
 
 </body>
@@ -450,7 +450,7 @@ Here's a comprehensive example demonstrating the power of shadow-form-handler:
         <button type="button" id="addDescription">Add Description Field</button>
       </form>
     
-       <script  src=https://cdn.jsdelivr.net/gh/Mostafashadow1/shadow-form-handler/dist/shadow-form-handler.js></script>
+       <script  src=https://cdn.jsdelivr.net/gh/Mostafashadow1/shadow-form-handler@v1.0.3/dist/shadow-form-handler.js></script>
       <script src="./index.js">
       </script>
 </body>
