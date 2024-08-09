@@ -19,7 +19,7 @@ export class FormHandler {
   constructor() {
     this.hooksHandler = new HooksHandler();
     this.errorHandler = new ErrorHandler();
-    this.fieldManager = new FieldManager(this.hooksHandler);
+    this.fieldManager = new FieldManager();
     this.validator = new Validator(this.fieldManager , this.errorHandler , this.hooksHandler);
     this.eventManager = new EventManager(this.fieldManager, this.validator , this.hooksHandler);
   }

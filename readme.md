@@ -78,9 +78,8 @@ You can also download the latest release directly from GitHub. Follow these step
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Simple Example with shadow-form-handler</title>
-  <link rel="stylesheet" href="./styles.css"
- 
-</head>
+  <link rel="stylesheet" href="./styles.css">
+  </head>
 <body>
   <form id="myForm">
     <div>
@@ -90,7 +89,7 @@ You can also download the latest release directly from GitHub. Follow these step
     </div>
     <button type="submit">Submit</button>
   </form>
-  <script src="./node_modules/shadow-form-handler/dist/shadow-form-handlerjs"></script>
+ <script src="https://cdn.jsdelivr.net/gh/Mostafashadow1/shadow-form-handler/dist/shadow-form-handler.js"></script>
   <script src="./index.js"></script>
 
 </body>
@@ -191,7 +190,7 @@ formHandler.submitHandler('myForm', (values) => {
     formHandler.addHooks({ 
       beforeValidate:  (fields) => console.log( "beforeValidate", fields),
       afterValidate:(fields) => console.log("after validated" , fields),
-      onValueChange: (field, fields) =>(fields) => console.log(fields),
+      onValueChange: (field, fields) => console.log(field , fields),
     });
     ```
 

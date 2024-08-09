@@ -1,12 +1,9 @@
 import { addFieldParams, Field, RegisterParams } from '../interfaces/index';
-import { HooksHandler } from './HooksHandler';
 /**
  * FieldManager class: Manages form fields, their values, and related DOM operations.
  */
 export declare class FieldManager {
-    private hooksHandler;
     private fields;
-    constructor(hooksHandler: HooksHandler);
     /**
      * Register a new form field.
      * @param {RegisterParams} params - The parameters for registering a field.

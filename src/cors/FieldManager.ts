@@ -1,13 +1,10 @@
-import { addFieldParams, Field, Hooks, RegisterParams } from '../interfaces/index';
-import { HooksHandler } from './HooksHandler';
+import { addFieldParams, Field,  RegisterParams } from '../interfaces/index';
 
 /**
  * FieldManager class: Manages form fields, their values, and related DOM operations.
  */
 export class FieldManager {
   private fields: Field[] = [];
-  constructor( private hooksHandler : HooksHandler) {}
-
   /**
    * Register a new form field.
    * @param {RegisterParams} params - The parameters for registering a field.
@@ -17,6 +14,10 @@ export class FieldManager {
     this.fields.push({ id, value: initialValue || '', error: null, schemaValidation, customValidation });
     const inputElement = document.getElementById(id) as HTMLInputElement;
     if (!inputElement) throw new Error(`Input element with id ${id} not found`);
+    inputElement.addEventListener('input' , ({target}) => {
+      this.setValue(params.id , (target as HTMLInputElement).value)
+    })
+    this
     if (initialValue) {
       inputElement.value = initialValue;
     }
@@ -138,12 +139,9 @@ export class FieldManager {
    * @param {string} value - The new value to set.
    */
   public setValue(id: string, value: string) {
-    console.log('dd')
     const field = this.getField(id);
-    const fields = this.getAllFields()
     if(!field) return;
-    const hooks : Hooks = this.hooksHandler.getHooks(); 
-      field.value = value;
+    field.value = value;
     
   }
 

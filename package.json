@@ -1,6 +1,6 @@
 {
   "name": "shadow-form-handler",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "main": "dist/shadow-form-handler.js",
   "description": "shadow-form-handler, the ultimate toolkit for effortless form handling and validation in JavaScript and TypeScript! Whether you're building simple forms or complex multi-step processes, our lightweight library empowers you to create seamless user experiences with minimal code.",
   "scripts": {
