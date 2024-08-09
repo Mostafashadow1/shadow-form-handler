@@ -1,9 +1,8 @@
 {
   "compilerOptions": {
     "outDir": "./dist",
-    "module": "es2020",
-    "target": "es2020",
-    "lib": ["es2020", "dom"],
+    "module": "CommonJS",
+    "target": "ES5",
     "sourceMap": true,
     "strict": true,
     "esModuleInterop": true,

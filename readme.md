@@ -89,7 +89,8 @@ You can also download the latest release directly from GitHub. Follow these step
     </div>
     <button type="submit">Submit</button>
   </form>
- <script src="https://cdn.jsdelivr.net/gh/Mostafashadow1/shadow-form-handler/dist/shadow-form-handler.js"></script>
+
+   <script src="https://cdn.jsdelivr.net/gh/Mostafashadow1/shadow-form-handler/dist/shadow-form-handler.js"></script>
   <script src="./index.js"></script>
 
 </body>
