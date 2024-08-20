@@ -5,23 +5,26 @@ import { addFieldParams, Field,  RegisterParams } from '../interfaces/index';
  */
 export class FieldManager {
   private fields: Field[] = [];
+ 
   /**
    * Register a new form field.
    * @param {RegisterParams} params - The parameters for registering a field.
    */
   public register(params: RegisterParams) {
-    const { id, schemaValidation, customValidation, initialValue } = params;
-    this.fields.push({ id, value: initialValue || '', error: null, schemaValidation, customValidation });
+    const { id, schemaValidation, customValidation, initialValue   ,  dependencies} = params;
+    this.fields.push({ id, value: initialValue || '', error: null, schemaValidation, customValidation , dependencies});
     const inputElement = document.getElementById(id) as HTMLInputElement;
     if (!inputElement) throw new Error(`Input element with id ${id} not found`);
     inputElement.addEventListener('input' , ({target}) => {
       this.setValue(params.id , (target as HTMLInputElement).value)
-    })
-    this
+    });
     if (initialValue) {
       inputElement.value = initialValue;
     }
+
   }
+
+  
 
  /**
    * Dynamically remove a form field.
@@ -48,6 +51,7 @@ export class FieldManager {
     inputElement.remove();
     errorElement?.remove();
     label?.remove();
+
   }
 
   /**
@@ -74,7 +78,6 @@ export class FieldManager {
       button.disabled = true;
     }
   }
-
   const container = document.getElementById(params.containerId);
   if (!container) throw new Error(`Container element with id ${params.containerId} not found`);
 
@@ -106,6 +109,7 @@ export class FieldManager {
     throw new Error(`Invalid position value: ${params.position}`);
 
   }
+
   this.register({
     id: params.fieldId,
     initialValue: params.register?.initialValue || "",
@@ -181,11 +185,5 @@ export class FieldManager {
     });
   }
 
-  /**
-   * Check if any field has errors.
-   * @returns {boolean} True if any field has an error, false otherwise.
-   */
-  public hasErrors(): boolean {
-    return this.fields.some(field => field.error !== null);
-  }
+
 }

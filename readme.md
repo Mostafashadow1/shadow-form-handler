@@ -1,31 +1,64 @@
-
 # shadow-form-handler
 
 ## Overview
 
-Welcome to **shadow-form-handler**, the ultimate toolkit for effortless form handling and validation in JavaScript and TypeScript! Whether you're building simple forms or complex multi-step processes, our lightweight library empowers you to create seamless user experiences with minimal code.
+**shadow-form-handler** v2.0.0 is a powerful and flexible form-handling and validation library for JavaScript and TypeScript. It simplifies the process of creating and managing complex forms by providing a rich set of features, an intuitive API, and an extensible architecture. Whether you’re building simple forms or complex multi-step workflows, shadow-form-handler v2.0.0 has you covered with robust validation, dynamic field management, and seamless integration capabilities.
+
 
 ## 🚀 Key Features
 
-1. **Dynamic Field Management**: Effortlessly add, remove, and modify form fields at runtime, giving you full control over your form's structure.
-2. **Flexible Validation**: Leverage both schema-based and custom validation rules to ensure your forms are always accurate and reliable.
-3. **Error Handling**: Enjoy built-in error display with customizable styling to match your application's design.
-4. **Event Management**: Seamlessly integrate form events and custom event listeners for a responsive user experience.
-5. **Hooks System**: Utilize an extensible architecture that allows for custom behavior at various stages of the form lifecycle.
-6. **Multiple Validation Modes**: Choose from different validation strategies, including on submit and real-time validation, to suit your needs.
-7. **Asynchronous Validation**: Perform asynchronous validations with ease, complete with timeout handling for a smooth user experience.
-8. **Dependent Field Validation**: Set up validations that depend on the values of other fields, ensuring complex form logic is handled effortlessly.
+1. **Dynamic Field Management**:
+   - Easily add, remove, and modify form fields at runtime.
+   - Specify the position where new fields should be inserted (top, bottom, or a specific index).
+   - Disable buttons when adding or removing fields for a better user experience.
 
+2. **Flexible Validation**:
+   - Leverage both schema-based and custom validation rules.
+   - Utilize built-in validation rules like `required`, `minLength`, `maxLength`, `pattern`, `email`, `range`, and `matches`.
+   - Create custom validation rules with asynchronous support.
+   - Set up validations that depend on the values of other fields.
 
-## 🎯 Key Benefits
+3. **Error Handling**:
+   - Display error messages for invalid fields with customizable styling.
+   - Provide clear and specific error messages to enhance the user experience.
+   - Automatically display errors when validation fails.
 
-1. **Reduced Development Time:** Streamline form creation and validation with minimal code.
-2. **Enhanced User Experience:** Provide instant feedback with real-time validation.
-3. **Flexibility:** Easily adapt to changing requirements with dynamic field management.
-4. **Powerful Validation:** Combine schema-based and custom validators for complex scenarios.
-5. **Asynchronous Support:** Handle server-side validations seamlessly.
-6. **Event-Driven Architecture:** Extend functionality with hooks and custom event listeners.
-7. **Customizable UI:** Tailor error messages and styles to match your design.
+4. **Event Management**:
+   - Attach custom event listeners to form fields (e.g., `input`, `change`, `blur`).
+   - Integrate with form events like `onFormSubmitSuccess`, `onFormSubmitFail`, and `onFieldValidationError`.
+
+5. **Hooks System**:
+   - Extend the functionality of the form handler by adding custom hooks.
+   - Trigger hooks at various stages of the form lifecycle, such as field registration, validation, and submission.
+   - Use hooks to implement custom logic, logging, or side effects.
+
+6. **Validation Modes**:
+   - Choose between `default` (on form submit) and `runtime` (real-time) validation modes.
+   - Automatically add runtime validation to new fields when they are registered.
+
+7. **Asynchronous Validation**:
+   - Perform asynchronous validations with ease, such as checking for uniqueness on the server.
+   - Implement timeout handling to ensure a smooth user experience.
+
+8. **Dependent Field Validation**:
+   - Set up validations that depend on the values of other form fields.
+   - Automatically re-validate dependent fields when their dependencies change.
+
+9. **Internationalization and Localization**:
+   - Provide translations for validation error messages.
+   - Support multiple languages to reach a global audience.
+   - Easily add new translations or override existing ones.
+
+## 🎯 Benefits
+
+1. **Reduced Development Time**: Streamline form creation and validation with minimal boilerplate code.
+2. **Enhanced User Experience**: Provide instant feedback with real-time validation and clear error messages.
+3. **Flexibility**: Easily adapt to changing requirements with dynamic field management and extensible architecture.
+4. **Powerful Validation**: Combine schema-based and custom validators to handle complex validation scenarios.
+5. **Asynchronous Support**: Seamlessly integrate server-side validations without blocking the UI.
+6. **Event-Driven Architecture**: Extend functionality with hooks and custom event listeners.
+7. **Customizable UI**: Tailor error messages and styles to match your application's design.
+8. **Internationalization**: Support multiple languages for a global reach.
 
 ## 📦 Installation
 
@@ -50,7 +83,7 @@ To use **ShadowFormHandler** directly in your HTML file, add the following scrip
 Alternatively, you can use **ShadowFormHandler** via a CDN by adding this script tag:
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/Mostafashadow1/shadow-form-handler@v1.0.3/dist/shadow-form-handler.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/Mostafashadow1/shadow-form-handler@v2.0.0/dist/shadow-form-handler.js"></script>
 ```
 
 ### Using GitHub Releases
@@ -70,7 +103,8 @@ You can also download the latest release directly from GitHub. Follow these step
 <script src="path/to/shadow-form-handler.js"></script>
 ```
 
-## Simple Example 
+
+### Simple Form Handling
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -90,24 +124,25 @@ You can also download the latest release directly from GitHub. Follow these step
     <button type="submit">Submit</button>
   </form>
 
-   <script src="https://cdn.jsdelivr.net/gh/Mostafashadow1/shadow-form-handler@v1.0.3/dist/shadow-form-handler.js"></script>
+   <script src="https://cdn.jsdelivr.net/gh/Mostafashadow1/shadow-form-handler@v2.0.0/dist/shadow-form-handler.js"></script>
   <script src="./index.js"></script>
 
 </body>
 </html>
-
 ```
+
 ```javascript
-const { FormHandler , required , minLength , maxLength } = shadowFormHandler;
+const { FormHandler } = shadowFormHandler;
 const formHandler = new FormHandler();
- 
+
 // Register a field
 formHandler.register({
   id: 'username',
+  initialValue: "",
   schemaValidation: [
-    required('Username is required'),
-    minLength(3, 'Username must be at least 3 characters long'),
-    maxLength(15 , 'Username must be less than 15 characters '),
+    formHandler.validation.required('Username is required'),
+    formHandler.validation.minLength(3, 'Username must be at least 3 characters long'),
+    formHandler.validation.maxLength(15, 'Username must be less than 15 characters'),
   ]
 });
 
@@ -117,9 +152,12 @@ formHandler.submitHandler('myForm', (values) => {
 });
 ```
 
+
 ## Core Components
 
-### Methods
+## Methods
+
+### Form Field Methods
 
 - **`register({id: string, initialValue?: string, schemaValidation?: [], customValidation?:[] })`**: 
   - **Purpose**: Register a new form field.
@@ -184,16 +222,59 @@ formHandler.submitHandler('myForm', (values) => {
     formHandler.setErrorStyles({ color: 'red', fontSize: '12px' });
     ```
 
-- **`addHooks(hooks: Hooks)`**: 
-  - **Purpose**: Add custom hooks for form lifecycle events.
-  - **Usage**: 
-    ```typescript
-    formHandler.addHooks({ 
-      beforeValidate:  (fields) => console.log( "beforeValidate", fields),
-      afterValidate:(fields) => console.log("after validated" , fields),
-      onValueChange: (field, fields) => console.log(field , fields),
-    });
-    ```
+Sure! Here's the updated section for your README file:
+
+### Methods
+
+#### `addHooks(hooks: Hooks)`
+
+**Purpose**: Add custom hooks for form lifecycle events.
+**Usage**:
+```typescript
+formHandler.addHooks({
+  onFormSubmitSuccess: (values) => {
+    console.log("Form submitted successfully with values:", values);
+  },
+  onFormSubmitFail: (errors) => {
+    console.error("Form submission failed with errors:", errors);
+  },
+  onFieldValidationError: (fieldId, error) => {
+    if (error) {
+      console.warn(`Validation error on field ${fieldId}: ${error}`);
+    }
+  },
+  onFormReset: () => {
+    console.log("Form reset successfully");
+  },
+  beforeFieldRegister: (fieldId, params) => {
+    console.log(`Registering field: ${fieldId}`, params);
+  },
+  afterFieldRegister: (fieldId, params) => {
+    console.log(`Field registered: ${fieldId}`, params);
+  },
+  onValidationStart: (fields) => {
+    console.log("Validation started", fields);
+  },
+  onValidationEnd: (fields) => {
+    console.log("Validation ended", fields);
+  },
+  onValueChange: (fieldId, value) => {
+    console.log(fieldId, value);
+  },
+  onFieldAdd: (fieldId) => {
+    console.log(fieldId);
+  },
+  onFieldRemove: (fieldId) => {
+    console.log(fieldId);
+  },
+  onFocus: (field) => {
+    console.log(field);
+  },
+  onBlur: (field) => {
+    console.log(field);
+  },
+});
+```
 
 - **`addCustomEventListener(id: string, event: string, listener: EventListener)`**: 
   - **Purpose**: Add a custom event listener to a field.
@@ -201,7 +282,49 @@ formHandler.submitHandler('myForm', (values) => {
     ```typescript
     formHandler.addCustomEventListener('username', 'focus', () => console.log('Username field focused'));
     ```
----
+
+### Language Methods
+
+- **`setCurrentLanguage(langCode: string)`**: 
+  - **Purpose**: Set the current language.
+  - **Usage**: 
+    ```typescript
+    formHandler.lang.setCurrentLanguage('ar');
+    ```
+
+- **`getCurrentLanguage()`**: 
+  - **Purpose**: Get the current language.
+  - **Usage**: 
+    ```typescript
+    const currentLang = formHandler.lang.getCurrentLanguage();
+    ```
+
+- **`addTranslations(lang: string, translations: { [key: string]: string; })`**: 
+  - **Purpose**: Add translations for a specific language.
+  - **Usage**: 
+    ```typescript
+    formHandler.lang.addTranslations('en', {
+       'password': 'Password must contain at least one uppercase letter, one lowercase letter, and one number.',
+      'confirmPassword' : "Passwords do not match"
+    });
+
+    formHandler.lang.addTranslations('ar', {
+     'password': 'يجب أن تحتوي كلمة المرور على حرف كبير واحد على الأقل، وحرف صغير واحد، ورقم واحد.',
+     'confirmPassword' : "كلمات المرور غير متطابقة."
+    });
+
+    formHandler.lang.addTranslations('es', {
+      'password': 'Le mot de passe doit contenir au moins une lettre majuscule, une lettre minuscule et un chiffre.',
+      'confirmPassword' : "Les mots de passe ne correspondent pas."
+    });
+    ```
+
+```typescript
+const currentLang = formHandler.lang.getCurrentLanguage();
+```
+
+
+
 
 ### Built-in Validation Rules
 
@@ -209,7 +332,7 @@ The package comes with several pre-defined validation rules:
 
 - **`required(message: string = "This field is required.")`**: Ensures the field is not empty.
   - **Parameters**: 
-   `message`: The error message to display if validation fails. Defaults to "This field is required."
+    - `message`: The error message to display if validation fails. Defaults to "This field is required."
 
 - **`minLength(length: number, message: string = "This field must be at least {length} characters long.")`**: Checks if the value meets the minimum length.
   - **Parameters**: 
@@ -229,127 +352,23 @@ The package comes with several pre-defined validation rules:
 - **`email(message: string = "This field must be a valid email address.")`**: Checks if the value is a valid email format.
   - **Parameters**: 
     - `message`: The error message to display if validation fails. Defaults to "This field must be a valid email address."
-  - **Returns**: A function that validates if the value is a valid email.
+
+- **`range(min: number, max: number, message: string = "Value must be between {min} and {max}.")`**: Ensures the value is within a specified range.
+  - **Parameters**: 
+    - `min`: The minimum value allowed.
+    - `max`: The maximum value allowed.
+    - `message`: The error message to display if validation fails. Defaults to "Value must be between {min} and {max}."
+
+- **`matches(fieldToMatch: string, message: string = "This field must match {fieldToMatch}.")`**: Ensures the value matches another field's value.
+  - **Parameters**: 
+    - `fieldToMatch`: The field to match.
+    - `message`: The error message to display if validation fails. Defaults to "This field must match {fieldToMatch}."
 
 
-
-## 🛠 Advanced Features
-
-### Custom Validation 
-
-Create complex validation rules with ease:
-
-```javascript
-
- // Set validation mode
-formHandler.setMode('runtime'); // runtime or default 
-
-// Register a field
-formHandler.register({
-  id: "password",
-  schemaValidation: [
-    required() // add mesage optional
-  ],
-  customValidation: [
-    {
-      validate: value => /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(value),
-      message: "Password must be at least 8 characters long and include both letters and numbers"
-    }
-  ]
-});
-
-```
-### Or use built in Validator like Pattern
-
-```javascript
-
- // Set validation mode
- formHandler.setMode('runtime'); // runtime or default 
- 
-formHandler.register({
-  id: "password",
-  schemaValidation: [
-    required('password filed is required'),
-    pattern( /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/ , "Password must be at least 8 characters long and include both letters and numbers"),
-  ]
-});
-```
-
-
-### Asynchronous Validation
-
-Perform server-side checks without blocking the UI:
-
-```javascript
-
-
-formHandler.register({
-  id: "username",
-  schemaValidation: [
-    required('password filed is required'),
-  ],
-   customValidation: [
-    {
-      validate: async (value) => {
-        // Simulating an API call to check username uniqueness
-        const response = await fetch(`/check-username?username=${value}`);  
-        return response.ok;
-      },
-      message: "Username is already taken"
-    }
-  ]
-});
-```
-
-### Dependent Field Validation
-
-Validate fields based on the values of other fields:
-
-```javascript
-
-// register password field
-formHandler.register({
-  id: "password",
-  schemaValidation: [
-    required('password filed is required'),
-    pattern( /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/ , "Password must be at least 8 characters long and include both letters and numbers"),
-  ]
-});
-
-// register confirm-password field
- formHandler.register({
-  id: "confirm-password",
-  customValidation: [
-    {
-      validate: value => value === formHandler.getValue('password'),
-      message: "Passwords do not match",
-      depends: 'password',
-    }
-  ],
-});
-```
-
-### Asynchronous Validation With Dependent Field Validation
-
-```javascript
-formHandler.register({
-  id: 'email',
-  customValidation: [{
-    validate: async (value) => {
-      // Simulating an API call to check email uniqueness
-      const response = await fetch(`/api/check-email?email=${value}`);
-      return response.ok;
-    },
-    message: 'This email is already in use',
-    depends: 'username'  // This validation will re-run when the 'username' field changes
-  }]
-});
-```
 
 ### Dynamic Field Management
 
 ```javascript
-
 // Add a new field
 formHandler.addField({
   containerId: 'formContainer',
@@ -359,9 +378,8 @@ formHandler.addField({
     initialValue: '',
     schemaValidation: [required('This field is required')]
   },
-  position: 'top' // position of element added : 'top' | 'bottom' | number of element filed like 3 
+  position: 'top' // position of element added: 'top' | 'bottom' | number of element filed like 3
 });
-
 
 // Remove a field
 formHandler.removeField({
@@ -370,34 +388,243 @@ formHandler.removeField({
 });
 ```
 
-### Adding Custom Hooks
+### Asynchronous Validation with Dependent Fields
 
 ```javascript
-formHandler.addHooks({
-  beforeValidate: (fields) => {
-    console.log('About to validate fields:', fields);
-  },
-  afterValidate: (fields) => {
-    console.log('Validation completed for fields:', fields);
-  },
-  onValueChange: (field, allFields) => {
-    console.log(`Field ${field.id} changed. New value:`, field.value);
-  }
+ // Set validation mode
+formHandler.setMode('runtime'); // runtime or default 
+
+formHandler.register({
+  id: 'email',
+  dependencies: ['username'], // This validation will re-run when the 'username' field changes
+  customValidation: [{
+    validate: async (value) => {
+      // Simulating an API call to check email uniqueness
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      return !value.includes('shadow' && 'mostafa mohamed' && 'mostafa');
+    },
+    message: 'This email is already taken.',
+  }]
 });
 ```
 
-## Error Styling
-
-Customize the appearance of error messages:
+### Internationalization and Localization
 
 ```javascript
-formHandler.setErrorStyles({
-  color: 'red',
-  fontStyle: 'italic',
-  fontWeight:"bold",
-  marginTop: '5px'
+
+// Set the current language
+formHandler.lang.setCurrentLanguage('ar');
+
+// Add translations for different languages
+formHandler.lang.addTranslations('en', {
+  'required': 'This field is required.',
+  'minLength': 'This field must be at least {min} characters long.',
+  'maxLength': 'This field must not exceed {max} characters.',
+  'email': 'Please enter a valid email address.',
+  'range': 'Value must be between {min} and {max}.',
+  'matches': 'This field must match {fieldToMatch}.',
+});
+
+formHandler.lang.addTranslations('ar', {
+  'required': 'هذا الحقل مطلوب.',
+  'minLength': 'يجب أن يحتوي هذا الحقل على {min} أحرف على الأقل.',
+  'maxLength': 'يجب ألا يتجاوز هذا الحقل {max} حرفًا.',
+  'email': 'يرجى إدخال عنوان بريد إلكتروني صالح.',
+  'range': 'يجب أن تكون القيمة بين {min} و {max}.',
+  'matches': 'يجب أن يتطابق هذا الحقل مع {fieldToMatch}.',
+});
+
+```
+
+### Dependent Field Validation With built in 'matches' method
+
+```javascript
+
+formHandler.lang.addTranslations('en', {
+  'password': 'Password must contain at least one uppercase letter, one lowercase letter, and one number.',
+  'confirmPassword' : "Passwords do not match"
+
+});
+
+formHandler.lang.addTranslations('ar', {
+  'password': 'يجب أن تحتوي كلمة المرور على حرف كبير واحد على الأقل، وحرف صغير واحد، ورقم واحد.',
+  'confirmPassword' : "كلمات المرور غير متطابقة."
+
+});
+
+formHandler.lang.addTranslations('es', {
+  'password': 'Le mot de passe doit contenir au moins une lettre majuscule, une lettre minuscule et un chiffre.',
+  'confirmPassword' : "Les mots de passe ne correspondent pas."
+});
+
+formHandler.register({
+  id: 'password',
+  schemaValidation: [
+    formHandler.validation.required(),
+    formHandler.validation.minLength(8),
+    formHandler.validation.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/, formHandler.lang.getTranslation('password'))
+  ]
+});
+
+formHandler.register({
+  id: 'confirm-password',
+  schemaValidation: [
+    formHandler.validation.required(),
+    formHandler.validation.matches('password' , formHandler.lang.getTranslation('confirmPassword'))
+  ]
+});
+
+```
+### in this approach we prefer uses dependencies
+```javascript
+formHandler.register({
+  id: 'confirm-password',
+  dependencies: ['password'],
+  customValidation: [{
+    validate: (value, formValues) => value === formValues.password,
+    message: formHandler.lang.getTranslation('confirmPassword')
+  }]
 });
 ```
+
+
+
+### Hooks System
+
+- **`onFormSubmitSuccess(values)`**: Triggered when the form is successfully submitted.
+  - **Parameters**: 
+    - `values`: The values submitted in the form.
+  - **Example**:
+    ```typescript
+    onFormSubmitSuccess: (values) => {
+      console.log("Form submitted successfully with values:", values);
+    }
+    ```
+
+- **`onFormSubmitFail(errors)`**: Triggered when the form submission fails.
+  - **Parameters**: 
+    - `errors`: The errors encountered during submission.
+  - **Example**:
+    ```typescript
+    onFormSubmitFail: (errors) => {
+      console.error("Form submission failed with errors:", errors);
+    }
+    ```
+
+- **`onFieldValidationError(fieldId, error)`**: Triggered when a field validation error occurs.
+  - **Parameters**: 
+    - `fieldId`: The ID of the field with the error.
+    - `error`: The validation error message.
+  - **Example**:
+    ```typescript
+    onFieldValidationError: (fieldId, error) => {
+      if (error) {
+        console.warn(`Validation error on field ${fieldId}: ${error}`);
+      }
+    }
+    ```
+
+- **`onFormReset()`**: Triggered when the form is reset.
+  - **Example**:
+    ```typescript
+    onFormReset: () => {
+      console.log("Form reset successfully");
+    }
+    ```
+
+- **`beforeFieldRegister(fieldId, params)`**: Triggered before a field is registered.
+  - **Parameters**: 
+    - `fieldId`: The ID of the field being registered.
+    - `params`: The parameters for the field registration.
+  - **Example**:
+    ```typescript
+    beforeFieldRegister: (fieldId, params) => {
+      console.log(`Registering field: ${fieldId}`, params);
+    }
+    ```
+
+- **`afterFieldRegister(fieldId, params)`**: Triggered after a field is registered.
+  - **Parameters**: 
+    - `fieldId`: The ID of the field being registered.
+    - `params`: The parameters for the field registration.
+  - **Example**:
+    ```typescript
+    afterFieldRegister: (fieldId, params) => {
+      console.log(`Field registered: ${fieldId}`, params);
+    }
+    ```
+
+- **`onValidationStart(fields)`**: Triggered when validation starts.
+  - **Parameters**: 
+    - `fields`: The fields being validated.
+  - **Example**:
+    ```typescript
+    onValidationStart: (fields) => {
+      console.log("Validation started", fields);
+    }
+    ```
+
+- **`onValidationEnd(fields)`**: Triggered when validation ends.
+  - **Parameters**: 
+    - `fields`: The fields that were validated.
+  - **Example**:
+    ```typescript
+    onValidationEnd: (fields) => {
+      console.log("Validation ended", fields);
+    }
+    ```
+
+- **`onValueChange(fieldId, value)`**: Triggered when a field value changes.
+  - **Parameters**: 
+    - `fieldId`: The ID of the field.
+    - `value`: The new value of the field.
+  - **Example**:
+    ```typescript
+    onValueChange: (fieldId, value) => {
+      console.log(fieldId, value);
+    }
+    ```
+
+- **`onFieldAdd(fieldId)`**: Triggered when a field is added.
+  - **Parameters**: 
+    - `fieldId`: The ID of the field being added.
+  - **Example**:
+    ```typescript
+    onFieldAdd: (fieldId) => {
+      console.log(fieldId);
+    }
+    ```
+
+- **`onFieldRemove(fieldId)`**: Triggered when a field is removed.
+  - **Parameters**: 
+    - `fieldId`: The ID of the field being removed.
+  - **Example**:
+    ```typescript
+    onFieldRemove: (fieldId) => {
+      console.log(fieldId);
+    }
+    ```
+
+- **`onFocus(field)`**: Triggered when a field gains focus.
+  - **Parameters**: 
+    - `field`: The field that gained focus.
+  - **Example**:
+    ```typescript
+    onFocus: (field) => {
+      console.log(field);
+    }
+    ```
+
+- **`onBlur(field)`**: Triggered when a field loses focus.
+  - **Parameters**: 
+    - `field`: The field that lost focus.
+  - **Example**:
+    ```typescript
+    onBlur: (field) => {
+      console.log(field);
+    }
+    ```
+
 
 
 ## 💡 Usage Example
@@ -408,174 +635,309 @@ Here's a comprehensive example demonstrating the power of shadow-form-handler:
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enhanced Form Validation Example</title>
+  <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
-    <form id="myForm">
-        <div>
-          <label for="firstname">Firstname:</label>
-          <input type="text" id="firstname" >
-          <span id="firstname-error" class="error-message"></span>
-        </div>
-        <div>
-          <label for="lastname">Lastname:</label>
-          <input type="text" id="lastname" >
-          <span id="lastname-error" class="error-message"></span>
-        </div>
-        <div>
-          <label for="username">Username:</label>
-          <input type="text" id="username" >
-          <span id="username-error" class="error-message"></span>
-        
-        </div>
-        <div>
-          <label for="email">Email:</label>
-          <input type="text" id="email" >
-          <span id="email-error" class="error-message"></span>
-        </div>
-        <div>
-          <label for="password">Password:</label>
-          <input type="password" id="password" >
-          <span id="password-error" class="error-message"></span>
-        </div>
-        <div>
-          <label for="confirm-password">Confirm Password:</label>
-          <input type="password" id="confirm-password" >
-          <span id="confirm-password-error" class="error-message"></span>
-        </div>
-        <button type="submit">Submit</button>
-        <button type="button" id="removeUsername">Remove Username Field</button>
-        <button type="button" id="addDescription">Add Description Field</button>
-      </form>
+ 
+  <form id="myForm">
+
+    <div>
+      <label for="firstname">Firstname:</label>
+      <input type="text" id="firstname" >
+      <span id="firstname-error" class="error-message"></span>
+    </div>
+    <div>
+      <label for="lastname">Lastname:</label>
+      <input type="text" id="lastname" >
+      <span id="lastname-error" class="error-message"></span>
+    </div>
+    <div>
+      <label for="age">Age:</label>
+      <input type="number" id="age" >
+      <span id="age-error" class="error-message"></span>
+    </div>
+    <div>
+      <label for="username">Username:</label>
+      <input type="text" id="username" >
+      <span id="username-error" class="error-message"></span>
     
-       <script  src=https://cdn.jsdelivr.net/gh/Mostafashadow1/shadow-form-handler@v1.0.3/dist/shadow-form-handler.js></script>
-      <script src="./index.js">
-      </script>
+    </div>
+    <div>
+      <label for="email">Email:</label>
+      <input type="text" id="email" >
+      <span id="email-error" class="error-message"></span>
+    </div>
+    <div>
+      <label for="password">Password:</label>
+      <input type="password" id="password" >
+      <span id="password-error" class="error-message"></span>
+    </div>
+    <div>
+      <label for="confirm-password">Confirm Password:</label>
+      <input type="password" id="confirm-password" >
+      <span id="confirm-password-error" class="error-message"></span>
+    </div>
+    <button type="submit">Submit</button>
+    <button type="button" id="removeUsername">Remove Username Field</button>
+    <button type="button" id="addDescription">Add Description Field</button>
+    <button type="button" id="resetform">Reset Form</button>
+  </form>
+ 
+  <script src="./node_modules/shadow-form-handler/dist/shadow-form-handler.js"></script>
+  <script src="./index.js"></script>
 </body>
 </html>
 
   ```
 
   ```javascript
- const { FormHandler, required, minLength, maxLength, pattern, email } = shadowFormHandler;
-    const formHandler = new FormHandler();
-    
-    // Set validation mode 
-    formHandler.setMode('runtime');
+const { FormHandler} = shadowFormHandler;
+const formHandler = new FormHandler();
+formHandler.setMode('runtime'); // runtime or default 
 
-    // Add hooks for validation events
-    formHandler.addHooks({
-      beforeValidate: (fields) => console.log("beforeValidate", fields),
-      afterValidate: (fields) => console.log("after validated", fields),
-      onValueChange: (field, fields) => console.log( field, fields),
-    });
-
-    // Set custom error styles
-    formHandler.setErrorStyles({
-      color: 'red',
-      fontWeight: 'bold',
-    });
-
-    
-    // Registering form fields
-    formHandler.register({
-      id: "firstname",
-      initialValue: "",
-      schemaValidation: [
-        required("firstname is required"),
-        maxLength(10), // if don't pass message , will show default message
-        minLength(3 , "Firstname must be more than 3 characters")
-      ],
-    });
-
-    formHandler.register({
-      id: "lastname",
-      initialValue: "",
-      schemaValidation: [
-        required("last name is required"),
-        maxLength(10, "Lastname must be less than 10 characters"),
-        minLength(4 , "Lastname must be more than 4 characters")
-      ]
-    });
-
-    formHandler.register({
-      id: "username",
-      initialValue: "initial value",
-      schemaValidation: [required("Username is required")],
-       customValidation: [
-       { validate: async (value) => new Promise(resolve => resolve(value !== "duplicate")), message: "Username must be unique" }]
-    });
-
-    formHandler.register({
-      id: "email",
-      initialValue: "",
-      schemaValidation: [
-        required("This input is required"),
-        email("email is not valid")
-      ],
-      
-    });
-
-    formHandler.register({
-      id: "password",
-      schemaValidation: [
-        required('password filed is required'),
-        pattern( /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/ , "Password must be at least 8 characters long and include both letters and numbers"),
-      ]
-    });
-    
-    // register confirm-password field
-     formHandler.register({
-      id: "confirm-password",
-      customValidation: [
-        {
-          validate: value => value === formHandler.getValue('password'),
-          message: "Passwords do not match",
-          depends: 'password',
-        }
-      ],
-    });
-
-  
-    // Adding custom event listener
-    formHandler.addCustomEventListener("email", "blur", (event) => {
-      console.log("Email input lost focus", event);
-    });
-
-    // Handling form submission
-    formHandler.submitHandler('myForm', (values) => {
-      console.log('Form submitted with values:', values);
-    });
-
-    
-    // Adding a field dynamically
-    document.getElementById('addDescription').addEventListener('click', () => {
-    formHandler.addField({
-        containerId:'myForm',
-        fieldId:'description',
-        labelText:'Description',
-        register:{
-        initialValue:'',
-        schemaValidation:[required('input must be required')],
-        customValidation:[{validate : value => value.length <= 10 , message:"input must less than 10"}],
-        },
-        position:3,
-        disabledId:"addDescription",
-    })
+formHandler.lang.getCurrentLanguage();
+// Add translations
+formHandler.lang.addTranslations('en', {
+  'required': 'This field is required.',
+  'minLength': 'This field must be at least {min} characters long.',
+  'maxLength': 'This field must not exceed {max} characters.',
+  'email': 'Please enter a valid email address.',
+  'range': 'Value must be between {min} and {max}.',
+  'matches': 'This field must match {fieldToMatch}.',
 });
 
-    // Removing a field dynamically
-    document.getElementById('removeUsername').addEventListener('click', () => {
-      formHandler.removeField( {fieldId : "username" , disabledId:"removeUsername"} );
-    });
+formHandler.lang.addTranslations('ar', {
+  'required': 'هذا الحقل مطلوب.',
+  'minLength': 'يجب أن يحتوي هذا الحقل على {min} أحرف على الأقل.',
+  'maxLength': 'يجب ألا يتجاوز هذا الحقل {max} حرفًا.',
+  'email': 'يرجى إدخال عنوان بريد إلكتروني صالح.',
+  'range': 'يجب أن تكون القيمة بين {min} و {max}.',
+  'matches': 'يجب أن يتطابق هذا الحقل مع {fieldToMatch}.',
+});
 
+formHandler.lang.addTranslations('es', {
+  'required': 'Este campo es obligatorio.',
+  'minLength': 'Este campo debe tener al menos {min} caracteres.',
+  'maxLength': 'Este campo no debe exceder los {max} caracteres.',
+  'email': 'Por favor, introduce una dirección de correo electrónico válida.',
+  'range': 'El valor debe estar entre {min} y {max}.',
+  'matches': 'Este campo debe coincidir con {fieldToMatch}.',
+});
+
+
+formHandler.lang.setCurrentLanguage('ar')
+
+formHandler.setErrorStyles({
+  color: "red",
+  marginTop:2,
+})
+formHandler.register({
+  id: "firstname",
+  initialValue: "",
+  schemaValidation: [
+    formHandler.validation.required(),
+    formHandler.validation.maxLength(10),
+    formHandler.validation.minLength(4)
+  ]
+});
+formHandler.register({
+  id: "lastname",
+  initialValue: "",
+  schemaValidation: [
+    formHandler.validation.required(),
+    formHandler.validation.maxLength(10),
+    formHandler.validation.minLength(4)
+  ]
+});
+
+formHandler.lang.addTranslations('en', {
+  'usernameTaken': 'This username is already taken.'
+});
+
+formHandler.lang.addTranslations('ar', {
+  'usernameTaken': 'اسم المستخدم هذا مستخدم بالفعل.'
+});
+
+formHandler.lang.addTranslations('es', {
+  'usernameTaken': 'Este nombre de usuario ya está en uso.'
+});
+
+formHandler.register({
+  id: "username",
+  dependencies: ['email'],
+  schemaValidation: [formHandler.validation.required() , formHandler.validation.minLength(3),
+    formHandler.validation.maxLength(20)],
+   customValidation: [
+    {
+      validate: async (value) => {
+        // Simulate an API call to check if the email is already registered
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        return !value.includes('shadow' && 'mostafa mohamed' && 'mostafa');
+      },
+      message: formHandler.lang.getTranslation('usernameTaken'),
+    }
+   ]
+});
+
+
+
+formHandler.register({
+  id: 'email',
+  schemaValidation: [
+    formHandler.validation.required(),
+    formHandler.validation.email()
+  ]
+});
+
+formHandler.lang.addTranslations('en', {
+  'password': 'Password must contain at least one uppercase letter, one lowercase letter, and one number.',
+  'confirmPassword' : "Passwords do not match"
+
+});
+
+formHandler.lang.addTranslations('ar', {
+  'password': 'يجب أن تحتوي كلمة المرور على حرف كبير واحد على الأقل، وحرف صغير واحد، ورقم واحد.',
+  'confirmPassword' : "كلمات المرور غير متطابقة."
+
+});
+
+formHandler.lang.addTranslations('es', {
+  'password': 'Le mot de passe doit contenir au moins une lettre majuscule, une lettre minuscule et un chiffre.',
+  'confirmPassword' : "Les mots de passe ne correspondent pas."
+});
+
+formHandler.register({
+  id: 'password',
+  schemaValidation: [
+    formHandler.validation.required(),
+    formHandler.validation.minLength(8),
+    formHandler.validation.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/, formHandler.lang.getTranslation('password'))
+  ]
+});
+
+
+formHandler.register({
+  id: 'confirm-password',
+  schemaValidation: [
+    formHandler.validation.required(),
+    formHandler.validation.matches('password' , formHandler.lang.getTranslation('confirmPassword'))
+  ]
+});
+
+formHandler.register({
+  id: 'confirm-password',
+  dependencies: ['password'],
+  customValidation: [{
+    validate: (value, formValues) => value === formValues.password,
+    message: formHandler.lang.getTranslation('confirmPassword')
+  }]
+});
+
+formHandler.register({
+  id: 'age',
+  schemaValidation: [
+    formHandler.validation.required(),
+    formHandler.validation.range(18, 100)
+  ]
+});
+
+// Adding hooks for validation events
+formHandler.addHooks({
+  onFormSubmitSuccess: (values) => {
+    console.log("Form submitted successfully with values:", values);
+  },
+  onFormSubmitFail: (errors) => {
+    console.error("Form submission failed with errors:", errors);
+  },
+  onFieldValidationError: (fieldId, error) => {
+    if(error) {
+      console.warn(`Validation error on field ${fieldId}: ${error}`);
+    }
+  },
+  onFormReset: () => {
+    console.log(`form reseted susccfully`);
+  },
+  beforeFieldRegister: (fieldId, params) => {
+    console.log(`Registering field: ${fieldId}`, params);
+  },
+  afterFieldRegister: (fieldId, params) => {
+    console.log(`Field registered: ${fieldId}`, params);
+  },
+  onValidationStart:  (fields) => {
+    console.log( "beforeValidate", fields),
+  },
+  onValidationEnd:(fields) => {
+    console.log("after validated" , fields)
+  },
+  onValueChange: (fieldId, value) => {
+    console.log(fieldId , value)
+  },
+  onFieldAdd:(fieldId) => {
+    console.log(fieldId)
+  },
+  onFieldRemove:(fieldId) => {
+    console.log(fieldId)
+  },
+  onFocus:(field) => {
+    console.log(field)
+  },
+  onBlur:(field) => {
+    console.log(field)
+  },
+})
+
+
+// Adding custom event listener
+formHandler.addCustomEventListener("email", "blur", (event) => {
+  console.log("Email input lost focus", event);
+});
+
+// Handling form submission
+formHandler.submitHandler('myForm', (values) => {
+  console.log('Form submitted with values:', values);
+});
+
+// Adding a field dynamically
+document.getElementById('addDescription').addEventListener('click', () => {
+formHandler.addField({
+    containerId:'myForm',
+    fieldId:'description',
+    labelText:'Description',
+    register:{
+    initialValue:'',
+    schemaValidation:[formHandler.validation.required()],
+    },
+    position:3,
+    disabledId:"addDescription",
+    register:{
+      initialValue: "",
+      schemaValidation: [
+        formHandler.validation.required(),
+        formHandler.validation.maxLength(10),
+        formHandler.validation.minLength(4)
+      ],
+      customValidation:[]
+  }
+})
+});
+
+// Removing a field dynamically
+document.getElementById('removeUsername').addEventListener('click', () => {
+  formHandler.removeField( {fieldId : "username" , disabledId:"removeUsername"} );
+});
+
+
+// Removing a field dynamically
+document.getElementById('resetform').addEventListener('click', () => {
+  formHandler.resetForm()
+});
 ```
-   
-
 ## 🛠️ Best Practices
-1. **Clear Error Messages**: Always provide clear and specific error messages for each validation rule to enhance user understanding.
+
+1. **Clear Error Messages**: Provide clear and specific error messages for each validation rule to enhance the user's understanding.
 2. **Asynchronous Validations**: Use asynchronous validations sparingly to avoid performance issues. Ensure they are necessary and optimized.
 3. **Error Handling**: Implement proper error handling for asynchronous operations to manage potential issues gracefully.
 4. **Utilize Hooks**: Leverage hooks to extend functionality without modifying the core logic, ensuring maintainability and flexibility.
@@ -587,14 +949,10 @@ Here's a comprehensive example demonstrating the power of shadow-form-handler:
 - **Runtime Validation**: For runtime validation issues, verify that the correct mode (`default` or `runtime`) is set.
 - **Event Listeners**: If custom event listeners are not firing, check the element IDs and event types to ensure they are correctly specified.
 
-
 ## 🤝 Contributing
 
-Contributions to the FormHandler package are welcome! Please refer to the contributing guidelines in the repository for more information on how to submit pull requests, report issues, or request features.
-
-
-
+Contributions to the `shadow-form-handler` package are welcome! Please refer to the contributing guidelines in the repository for more information on how to submit pull requests, report issues, or request features.
 
 ## 📄 License
+
 This package is released under the MIT License. See the LICENSE file in the package repository for more details.
-```

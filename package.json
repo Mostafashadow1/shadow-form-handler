@@ -1,9 +1,9 @@
 {
   "name": "shadow-form-handler",
-  "version": "1.0.3",
+  "version": "2.0.0",
   "main": "dist/shadow-form-handler.js",
   "types": "dist/index.d.ts",
-  "description": "shadow-form-handler, the ultimate toolkit for effortless form handling and validation in JavaScript and TypeScript! Whether you're building simple forms or complex multi-step processes, our lightweight library empowers you to create seamless user experiences with minimal code.",
+  "description": "v2.0.0 is a powerful and flexible form-handling and validation library for JavaScript and TypeScript. It simplifies the process of creating and managing complex forms by providing a rich set of features, an intuitive API, and an extensible architecture. Whether you’re building simple forms or complex multi-step workflows, shadow-form-handler v2.0.0 has you covered with robust validation, dynamic field management, and seamless integration capabilities.",
   "scripts": {
     "build:dev": "webpack  --mode development --config webpack.config.js",
     "build:prod": "webpack --mode production --config webpack.config.js",
@@ -15,7 +15,7 @@
     "dist",
     "README.md"
   ],
-  "author": "Your Name",
+  "author": "Mostafa Mohamed",
   "license": "MIT",
   "devDependencies": {
     "lite-server": "^2.6.1",

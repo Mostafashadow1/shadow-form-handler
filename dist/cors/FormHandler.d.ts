@@ -1,20 +1,34 @@
 import { Mode, Hooks, RegisterParams, ErrorStyle, addFieldParams } from '../interfaces/index';
+import * as validation from "../validators/ValidationRules";
 /**
  * FormHandler class: Manages form validation, registration, and submission.
  */
 export declare class FormHandler {
     private fieldManager;
     private hooksHandler;
-    private validator;
-    private errorHandler;
+    private validatorManager;
+    private errorManager;
     private eventManager;
     private mode;
+    /**
+      * Built-in validation that can be used directly.
+      */
+    validation: typeof validation;
+    /**
+     * Built-in lang that can be used directly.
+     */
+    lang: import("./LanguageManager").LanguageManager;
     constructor();
     /**
      * Register a form field with initial value and validators.
      * @param {RegisterParams} params - The parameters for registering a field.
      */
     register(params: RegisterParams): void;
+    /**
+     * Set up validation for a field and its dependencies.
+     * @param {string} fieldId - The ID of the field to set up validation for.
+     */
+    private setupFieldValidation;
     /**
      * Set the mode for the form handler.
      * @param {Mode} newMode - The new mode to set.
@@ -82,4 +96,9 @@ export declare class FormHandler {
      * @param {EventListener} listener - The event listener function.
      */
     addCustomEventListener(id: string, event: string, listener: EventListener): void;
+    /**
+      * Attaches focus and blur event listeners to an input field.
+      * @param {id} id - The parameters required to register the field.
+      */
+    attachFocusBlurListeners(id: string): void;
 }

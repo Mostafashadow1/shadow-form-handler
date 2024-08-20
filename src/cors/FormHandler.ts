@@ -1,27 +1,38 @@
 import { FieldManager } from './FieldManager';
-import { Validator } from './Validator';
-import { ErrorHandler } from './ErrorHandler';
+import { ValidatorManager } from './ValidatorManager';
+import { ErrorManager } from './ErrorManager';
 import { EventManager } from './EventManger';
 import { Mode, Hooks, RegisterParams, ErrorStyle, addFieldParams } from '../interfaces/index';
 import { HooksHandler } from './HooksHandler';
+import * as validation from "../validators/ValidationRules";
+import { lang } from './LanguageManager';
 
 /**
  * FormHandler class: Manages form validation, registration, and submission.
  */
+
 export class FormHandler {
   private fieldManager: FieldManager;
   private hooksHandler : HooksHandler;
-  private validator: Validator;
-  private errorHandler: ErrorHandler;
+  private validatorManager: ValidatorManager;
+  private errorManager: ErrorManager;
   private eventManager: EventManager;
   private mode: Mode = Mode.Default;
+ /**
+   * Built-in validation that can be used directly.
+   */
+ public validation = validation;
+  /**
+   * Built-in lang that can be used directly.
+   */
+ public lang = lang;
 
   constructor() {
     this.hooksHandler = new HooksHandler();
-    this.errorHandler = new ErrorHandler();
     this.fieldManager = new FieldManager();
-    this.validator = new Validator(this.fieldManager , this.errorHandler , this.hooksHandler);
-    this.eventManager = new EventManager(this.fieldManager, this.validator , this.hooksHandler);
+    this.errorManager = new ErrorManager(this.fieldManager);
+    this.validatorManager = new ValidatorManager(this.fieldManager , this.errorManager , this.hooksHandler);
+    this.eventManager = new EventManager(this.fieldManager, this.validatorManager , this.hooksHandler);
   }
 
   /**
@@ -29,9 +40,48 @@ export class FormHandler {
    * @param {RegisterParams} params - The parameters for registering a field.
    */
   public register(params: RegisterParams) {
+    this.hooksHandler.triggerHook('beforeFieldRegister' , params.id , params)
     this.fieldManager.register(params);
+    console.log(this.mode)
+
     if (this.mode === Mode.Runtime) {
       this.eventManager.addRuntimeValidation(params.id);
+    }
+    this.hooksHandler.triggerHook("afterFieldRegister" , params.id , params)
+
+    this.attachFocusBlurListeners(params.id)
+    // // Set up validation for this field and its dependencies
+    if(params.dependencies) {
+      this.setupFieldValidation(params.id);
+
+    }
+}
+
+  /**
+   * Set up validation for a field and its dependencies.
+   * @param {string} fieldId - The ID of the field to set up validation for.
+   */
+  private setupFieldValidation(fieldId: string) {
+    const field = this.fieldManager.getField(fieldId);
+    if (!field) return;
+
+    const inputElement = document.getElementById(fieldId) as HTMLInputElement;
+    if (inputElement) {
+      inputElement.addEventListener('input', () => {
+        this.validatorManager.validateField(fieldId);
+      });
+    }
+
+    // Set up validation for dependent fields
+    if (field.dependencies) {
+      field.dependencies.forEach(depId => {
+        const depElement = document.getElementById(depId) as HTMLInputElement;
+        if (depElement) {
+          depElement.addEventListener('input', () => {
+            this.validatorManager.validateField(fieldId);
+          });
+        }
+      });
     }
   }
 
@@ -53,13 +103,16 @@ export class FormHandler {
     if (!form) throw new Error("Form not found. Please ensure the form ID is correct!");
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      await this.validator.validateAll();
+      await this.validatorManager.validateAll();
       const values = this.fieldManager.getValues();
-      const hasErrors = this.fieldManager.hasErrors();
+      const hasErrors = this.errorManager.hasErrors()
       if (hasErrors) {
-        this.errorHandler.displayErrors(this.fieldManager.getAllFields());
+        this.errorManager.displayErrors(this.fieldManager.getAllFields());
+        this.hooksHandler.triggerHook('onFormSubmitFail' , this.errorManager.getErrors())        
       } else if (onSubmit) {
         onSubmit(values);
+        this.hooksHandler.triggerHook("onFormSubmitSuccess", values)
+
       }
     });
   }
@@ -88,7 +141,8 @@ export class FormHandler {
    */
   public resetForm() {
     this.fieldManager.resetFields();
-    this.errorHandler.clearErrors();
+    this.errorManager.clearErrors();
+    this.hooksHandler.triggerHook('onFormReset')
   }
 
   /**
@@ -98,6 +152,7 @@ export class FormHandler {
    */
   public removeField(params : {fieldId : string , disabledId:string}) {
     this.fieldManager.removeField(params);
+    this.hooksHandler.triggerHook('onFieldRemove' , params.fieldId)
   }
 
   /**
@@ -115,7 +170,9 @@ export class FormHandler {
     if (this.mode === Mode.Runtime) {
       this.eventManager.addRuntimeValidation(params.fieldId);
     }
-    this.errorHandler.displayErrors(this.fieldManager.getAllFields());
+    this.errorManager.displayErrors(this.fieldManager.getAllFields());
+    this.hooksHandler.triggerHook("onFieldAdd" , params.fieldId)
+
   }
 
   /**
@@ -123,7 +180,7 @@ export class FormHandler {
    * @param {ErrorStyle} style - An error style object to be applied.
    */
   public setErrorStyles(style: ErrorStyle) {
-    this.errorHandler.setErrorStyles(style);
+    this.errorManager.setErrorStyles(style);
   }
 
   /**
@@ -143,4 +200,34 @@ export class FormHandler {
   public addCustomEventListener(id: string, event: string, listener: EventListener) {
     this.eventManager.addCustomEventListener(id, event, listener);
   }
+
+ /**
+   * Attaches focus and blur event listeners to an input field.
+   * @param {id} id - The parameters required to register the field.
+   */
+ public attachFocusBlurListeners(id: string): void {
+  const inputElement = document.getElementById(id) as HTMLInputElement;
+
+  if (inputElement) {
+    // Attach focus event listener
+    inputElement.addEventListener('focus', () => {
+      const field = this.fieldManager.getField(id);
+      if (field) {
+        this.hooksHandler.triggerHook('onFocus', field);
+      }
+    });
+
+    // Attach blur event listener
+    inputElement.addEventListener('blur', () => {
+      const field = this.fieldManager.getField(id);
+      if (field) {
+        this.hooksHandler.triggerHook('onBlur', field);
+      }
+    });
+  } else {
+    console.warn(`Input element with id "${id}" not found.`);
+  }
+}
+
+
 }

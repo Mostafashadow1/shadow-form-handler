@@ -63,9 +63,4 @@ export declare class FieldManager {
      * Reset all form fields to their initial state.
      */
     resetFields(): void;
-    /**
-     * Check if any field has errors.
-     * @returns {boolean} True if any field has an error, false otherwise.
-     */
-    hasErrors(): boolean;
 }

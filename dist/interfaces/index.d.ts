@@ -1,12 +1,15 @@
-export type SchemaValidator = (value: string) => string | null;
+export type SchemaValidator = (value: string, formValues: {
+    [key: string]: string;
+}) => string | null;
 export declare const enum Mode {
     Default = "default",
     Runtime = "runtime"
 }
 export interface CustomValidator {
-    validate: (value: string) => boolean;
+    validate: (value: string, formValues: {
+        [key: string]: string;
+    }) => boolean;
     message: string;
-    depends?: string;
 }
 export interface Field {
     id: string;
@@ -14,17 +17,33 @@ export interface Field {
     error: string | null;
     customValidation?: Array<CustomValidator>;
     schemaValidation?: Array<SchemaValidator>;
+    dependencies?: string[];
 }
 export interface Hooks {
-    beforeValidate?: (fields: Field[]) => void;
-    afterValidate?: (fields: Field[]) => void;
-    onValueChange?: (field: Field, fields: Field[]) => void;
+    onFormSubmitSuccess?: (values: {
+        [key: string]: string;
+    }) => void;
+    onFormSubmitFail?: (errors: {
+        [key: string]: string;
+    }) => void;
+    onFieldValidationError?: (fieldId: string, error: string) => void;
+    onFormReset?: () => void;
+    beforeFieldRegister?: (fieldId: string, params: RegisterParams) => void;
+    afterFieldRegister?: (fieldId: string, params: RegisterParams) => void;
+    onFocus?: (field: Field) => void;
+    onBlur?: (field: Field) => void;
+    onValueChange?: (fieldId: string, value: string) => void;
+    onValidationStart?: (fields: Field[]) => void;
+    onValidationEnd?: (fields: Field[]) => void;
+    onFieldAdd?: (fieldId: string) => void;
+    onFieldRemove?: (fieldId: string) => void;
 }
 export interface RegisterParams {
     id: string;
     initialValue?: string;
     schemaValidation?: Array<SchemaValidator>;
     customValidation?: Array<CustomValidator>;
+    dependencies?: string[];
 }
 export interface ErrorStyle {
     property: string;

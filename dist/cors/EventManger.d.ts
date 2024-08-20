@@ -1,5 +1,5 @@
 import { FieldManager } from './FieldManager';
-import { Validator } from './Validator';
+import { ValidatorManager } from './ValidatorManager';
 import { HooksHandler } from './HooksHandler';
 /**
  * EventManager class: Manages form-related events and hooks.
@@ -8,7 +8,7 @@ export declare class EventManager {
     private fieldManager;
     private validator;
     private hooksHandler;
-    constructor(fieldManager: FieldManager, validator: Validator, hooksHandler: HooksHandler);
+    constructor(fieldManager: FieldManager, validator: ValidatorManager, hooksHandler: HooksHandler);
     /**
      * Add runtime validation to a form field.
      * @param {string} id - The id of the form field.

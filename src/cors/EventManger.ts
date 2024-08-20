@@ -1,6 +1,6 @@
 
   import { FieldManager } from './FieldManager';
-  import { Validator } from './Validator';
+  import { ValidatorManager } from './ValidatorManager';
   import { HooksHandler } from './HooksHandler';
   
   /**
@@ -9,7 +9,7 @@
   export class EventManager {  
     constructor(
       private fieldManager: FieldManager,
-      private validator: Validator,
+      private validator: ValidatorManager,
       private hooksHandler : HooksHandler
       
     ) {}
@@ -34,11 +34,9 @@
     private async handleInputChange(event: Event) {
       const target = event.target as HTMLInputElement;
       const field = this.fieldManager.getField(target.id);
-      const fields = this.fieldManager.getAllFields()
       if(!field) return;
         field.value = target.value;
-        const hooks = this.hooksHandler.getHooks();
-        if(hooks.onValueChange) hooks.onValueChange(field , fields)
+        this.hooksHandler.triggerHook('onValueChange' , field.id , field.value)
         await this.validator.validateField(field.id);
       
     }
