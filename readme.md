@@ -2,7 +2,7 @@
 
 ## Overview
 
-**shadow-form-handler** v2.0.0 is a powerful and flexible form-handling and validation library for JavaScript and TypeScript. It simplifies the process of creating and managing complex forms by providing a rich set of features, an intuitive API, and an extensible architecture. Whether you’re building simple forms or complex multi-step workflows, shadow-form-handler v2.0.0 has you covered with robust validation, dynamic field management, and seamless integration capabilities.
+**shadow-form-handler**  is a powerful and flexible form-handling and validation library for JavaScript and TypeScript. It simplifies the process of creating and managing complex forms by providing a rich set of features, an intuitive API, and an extensible architecture. Whether you’re building simple forms or complex multi-step workflows, shadow-form-handler has you covered with robust validation, dynamic field management, and seamless integration capabilities.
 
 
 ## 🚀 Key Features
@@ -83,7 +83,7 @@ To use **ShadowFormHandler** directly in your HTML file, add the following scrip
 Alternatively, you can use **ShadowFormHandler** via a CDN by adding this script tag:
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/Mostafashadow1/shadow-form-handler@v2.0.0/dist/shadow-form-handler.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/Mostafashadow1/shadow-form-handler@v2.0.1/dist/shadow-form-handler.js"></script>
 ```
 
 ### Using GitHub Releases
@@ -124,7 +124,7 @@ You can also download the latest release directly from GitHub. Follow these step
     <button type="submit">Submit</button>
   </form>
 
-   <script src="https://cdn.jsdelivr.net/gh/Mostafashadow1/shadow-form-handler@v2.0.0/dist/shadow-form-handler.js"></script>
+   <script src="https://cdn.jsdelivr.net/gh/Mostafashadow1/shadow-form-handler@v2.0.1/dist/shadow-form-handler.js"></script>
   <script src="./index.js"></script>
 
 </body>
@@ -140,7 +140,7 @@ formHandler.register({
   id: 'username',
   initialValue: "",
   schemaValidation: [
-    formHandler.validation.required('Username is required'),
+    formHandler.validation.required(), // if no message ? show default message
     formHandler.validation.minLength(3, 'Username must be at least 3 characters long'),
     formHandler.validation.maxLength(15, 'Username must be less than 15 characters'),
   ]
@@ -328,43 +328,37 @@ const currentLang = formHandler.lang.getCurrentLanguage();
 
 ### Built-in Validation Rules
 
-The package comes with several pre-defined validation rules:
+The package provides the following validation rules:
 
-- **`required(message: string = "This field is required.")`**: Ensures the field is not empty.
-  - **Parameters**: 
-    - `message`: The error message to display if validation fails. Defaults to "This field is required."
+1. **`required(message?: string)`**:
+   - Ensures the field is not empty.
+   - If no `message` is provided, it will use the translation for the 'required' key, or the default message `"This field is required."`.
 
-- **`minLength(length: number, message: string = "This field must be at least {length} characters long.")`**: Checks if the value meets the minimum length.
-  - **Parameters**: 
-    - `length`: The minimum length required.
-    - `message`: The error message to display if validation fails. Defaults to "This field must be at least {length} characters long."
+2. **`minLength(min: number, message?: string)`**:
+   - Checks if the value has at least the minimum length.
+   - If no `message` is provided, it will use the translation for the 'minLength' key, or the default message `"This field must be at least {min} characters long."`.
 
-- **`maxLength(length: number, message: string = "This field must be no more than {length} characters long.")`**: Checks if the value doesn't exceed the maximum length.
-  - **Parameters**: 
-    - `length`: The maximum length allowed.
-    - `message`: The error message to display if validation fails. Defaults to "This field must be no more than {length} characters long."
+3. **`maxLength(max: number, message?: string)`**:
+   - Checks if the value doesn't exceed the maximum length.
+   - If no `message` is provided, it will use the translation for the 'maxLength' key, or the default message `"This field must be no more than {max} characters long."`.
 
-- **`pattern(regex: RegExp, message: string = "This field does not match the required pattern.")`**: Validates the value against a regular expression.
-  - **Parameters**: 
-    - `regex`: The regular expression pattern to match.
-    - `message`: The error message to display if validation fails. Defaults to "This field does not match the required pattern."
+4. **`pattern(regex: RegExp, message?: string)`**:
+   - Validates the value against a regular expression pattern.
+   - If no `message` is provided, it will use the translation for the 'pattern' key, or the default message `"This field does not match the required pattern."`.
 
-- **`email(message: string = "This field must be a valid email address.")`**: Checks if the value is a valid email format.
-  - **Parameters**: 
-    - `message`: The error message to display if validation fails. Defaults to "This field must be a valid email address."
+5. **`email(message?: string)`**:
+   - Checks if the value is a valid email format.
+   - If no `message` is provided, it will use the translation for the 'email' key, or the default message `"This field must be a valid email address."`.
 
-- **`range(min: number, max: number, message: string = "Value must be between {min} and {max}.")`**: Ensures the value is within a specified range.
-  - **Parameters**: 
-    - `min`: The minimum value allowed.
-    - `max`: The maximum value allowed.
-    - `message`: The error message to display if validation fails. Defaults to "Value must be between {min} and {max}."
+6. **`range(min: number, max: number, message?: string)`**:
+   - Ensures the value is within a specified range.
+   - If no `message` is provided, it will use the translation for the 'range' key, or the default message `"The value must be between {min} and {max}."`.
 
-- **`matches(fieldToMatch: string, message: string = "This field must match {fieldToMatch}.")`**: Ensures the value matches another field's value.
-  - **Parameters**: 
-    - `fieldToMatch`: The field to match.
-    - `message`: The error message to display if validation fails. Defaults to "This field must match {fieldToMatch}."
+7. **`matches(fieldToMatch: string, message?: string)`**:
+   - Ensures the value matches another field's value.
+   - If no `message` is provided, it will use the translation for the 'matches' key, or the default message `"This field must match the {fieldToMatch} field."`.
 
-
+The validation rules use the `lang.getTranslation()` function to retrieve the appropriate error message. If the translation key is not found, the default message will be used.
 
 ### Dynamic Field Management
 
@@ -388,22 +382,18 @@ formHandler.removeField({
 });
 ```
 
-### Asynchronous Validation with Dependent Fields
+### Asynchronous Validation
 
 ```javascript
- // Set validation mode
-formHandler.setMode('runtime'); // runtime or default 
-
 formHandler.register({
-  id: 'email',
-  dependencies: ['username'], // This validation will re-run when the 'username' field changes
+  id: 'username',
   customValidation: [{
     validate: async (value) => {
-      // Simulating an API call to check email uniqueness
+      // Simulating an API call to check username uniqueness
       await new Promise(resolve => setTimeout(resolve, 1000));
       return !value.includes('shadow' && 'mostafa mohamed' && 'mostafa');
     },
-    message: 'This email is already taken.',
+    message: 'This username is already taken.',
   }]
 });
 ```
@@ -479,7 +469,7 @@ formHandler.register({
 ```javascript
 formHandler.register({
   id: 'confirm-password',
-  dependencies: ['password'],
+  dependencies: ['password'], 
   customValidation: [{
     validate: (value, formValues) => value === formValues.password,
     message: formHandler.lang.getTranslation('confirmPassword')
@@ -686,7 +676,7 @@ Here's a comprehensive example demonstrating the power of shadow-form-handler:
     <button type="button" id="resetform">Reset Form</button>
   </form>
  
-  <script src="./node_modules/shadow-form-handler/dist/shadow-form-handler.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/Mostafashadow1/shadow-form-handler@v2.0.1/dist/shadow-form-handler.js"></script>
   <script src="./index.js"></script>
 </body>
 </html>

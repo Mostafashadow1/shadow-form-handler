@@ -42,8 +42,6 @@ export class FormHandler {
   public register(params: RegisterParams) {
     this.hooksHandler.triggerHook('beforeFieldRegister' , params.id , params)
     this.fieldManager.register(params);
-    console.log(this.mode)
-
     if (this.mode === Mode.Runtime) {
       this.eventManager.addRuntimeValidation(params.id);
     }
